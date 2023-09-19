@@ -8,7 +8,7 @@ interface BoardStore {
 
 export const useBearStore = create<BoardStore>((set) => ({
   board: {
-    columns: new Map<TypeColumn, Column>()
+    columns: new Map<TypedColumn, Column>()
   },
   getBoard: async() => {
     const board = await getTodosGroupByColumn();

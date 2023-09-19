@@ -1,19 +1,21 @@
 interface Board {
-  columns: Map<TypeColumn, Column>;
+  columns: Map<TypedColumn, Column>;
 }
 
-type TypeColumn = "todo" | "inprogress" | "done";
+type TypedColumn = "todo" | "inprogress" | "done";
 
 interface Column {
-    id: TypeColumn;
+    id: TypedColumn;
     todos: Todo[];
 }
 
 interface Todo {
+    content: ReactNode;
+    id: string;
     $id: string;
     $createdAt: string;
     title: string;
-    status: TypeColumn;
+    status: TypedColumn;
     image?: Image;
 }
 
