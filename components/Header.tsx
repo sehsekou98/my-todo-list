@@ -1,11 +1,16 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-import Image from "next/image";
+import { useBearStore } from "@/store/BoardStore";
+import { MagnifyingGlassIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import Avatar from "react-avatar";
+import Image from "next/image";
 
-const Header = () => {
+function Header()  {
+  const [searchString, setSearchString] = useBearStore((state) => [
+    state.searchString, 
+    state.setSearchString,
+  ])
+
   return (
     <header>
       <div className="flex flex-col md:flex-row items-center p-5 bg-gray-500/10 rounded-b-2xl">
@@ -34,6 +39,8 @@ const Header = () => {
             <input
               type="text"
               placeholder="Search"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
               className="flex-1 outline-none p-2"
             />
             <button type="submit" hidden>
