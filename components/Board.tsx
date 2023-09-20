@@ -28,12 +28,12 @@ function Board() {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-           {Array.from(board.columns.entries()).map(([id, column], index) => (
+           {Array.from(board.columns.entries()).map(([id, column],
+            index) => (
   <Column key={id} id={id} todos={column.todos} index={index} />
-))}
-
-          </div>
-        )}
+   ))}
+ </div>
+     )}
       </Droppable>
     </DragDropContext>
   );

@@ -1,4 +1,4 @@
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 type Props = {
   id: TypedColumn;
@@ -6,7 +6,15 @@ type Props = {
   index: number;
 };
 
-const Column = ({ id, todos, index }: Props) => {
+const idToColumnTest: {
+  [key in TypedColumn]: string;
+} = {
+  todo: "To Do",
+  inprogress: "In Progress",
+  done: "Done",
+};
+
+function Column({ id, todos, index }: Props) {
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -16,28 +24,32 @@ const Column = ({ id, todos, index }: Props) => {
           ref={provided.innerRef}
         >
           {/** render droppable todos in the column */}
-          {todos.map((todo, todoIndex) => (
-            <Draggable
-              key={todo.id} // Make sure each draggable element has a unique key
-              draggableId={todo.id}
-              index={todoIndex}
-            >
-              {(provided) => (
-                <div
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                  ref={provided.innerRef}
-                  // Your todo content here
-                >
-                  {todo.content}
-                </div>
-              )}
-            </Draggable>
-          ))}
+
+          <Droppable droppableId={index.toString()} type="card">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className={`P-2 rounded-2xl shadow-sm ${
+                  snapshot.isDraggingOver ? "bg-blue-200" : "bg-white/50"
+                }`}
+              >
+                <h2 className="flex justify-between font-bold text-1xl p-2">
+                  {idToColumnTest[id]}
+                  <span
+                    className="text-gray-500 bg-gray-200 rounded-full
+                px-2 py-1 text-sm font-normal"
+                  >
+                    {todos.length}
+                  </span>
+                </h2>
+              </div>
+            )}
+          </Droppable>
         </div>
       )}
     </Draggable>
   );
-};
+}
 
 export default Column;
