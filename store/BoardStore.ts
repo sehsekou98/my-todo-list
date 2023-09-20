@@ -4,6 +4,7 @@ import { create } from 'zustand'
 interface BoardStore {
     board: Board;
     getBoard: () => void;
+    setBoardState: (board: Board) => void;
 }
 
 export const useBearStore = create<BoardStore>((set) => ({
@@ -14,7 +15,8 @@ export const useBearStore = create<BoardStore>((set) => ({
     const board = await getTodosGroupByColumn();
     set({ board });
 
-  }
+  },
   
-  
-}))  
+  setBoardState:(board) => set({ board }), 
+        
+})); 
